@@ -1,5 +1,6 @@
 package dominio.entidades;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,13 +10,22 @@ public class Docente {
 
     private String nombre;
     private String apellido;
-    private List<Materia> materias;
+    private LocalDate fechaDeNacimiento;
+    private String descripcionTituloHabilitante;
+    private LocalDate anioDictadoPrimerMateria;
+    private Genero genero;
+    private String apodo;
+    private List<Materia> materiasDeInteres;
+    private List<Materia> materiasDictadas;
+    private List<Discapacidad> discapacidadesTratadas;
     private List<Curso> cursos;
 
     public Docente()
     {
-        this.materias = new ArrayList<>();
-        this.cursos = new ArrayList<>();
+        this.materiasDeInteres      = new ArrayList<>();
+        this.cursos                 = new ArrayList<>();
+        this.materiasDictadas       = new ArrayList<>();
+        this.discapacidadesTratadas = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -43,17 +53,21 @@ public class Docente {
         this.cursos = cursos;
     }
 
-    public List<Materia> getMaterias() {
-        return this.materias;
+    public List<Materia> getMateriasDeInteres() {
+        return this.materiasDeInteres;
     }
 
-    public void agregarMaterias(Materia ... materias) {
-        this.materias.addAll(Arrays.asList(materias));
+    public void agregarMateriasDeInteres(Materia ... materias) {
+        this.materiasDeInteres.addAll(Arrays.asList(materias));
     }
 
     public void agregarCursos(Curso ... curso)
     {
         this.cursos.addAll(Arrays.asList(curso));
+    }
+
+    public void agregarDiscapacidadConHabilidad(Discapacidad ... discapacidades) {
+        this.discapacidadesTratadas.addAll(Arrays.asList(discapacidades));
     }
 
     /**
@@ -66,10 +80,18 @@ public class Docente {
 
     public Boolean dictasMateria(Materia materia)
     {
-        return this.materias.contains(materia);
+        return this.materiasDeInteres.contains(materia);
     }
 
     public Integer cantidadCursos() {
         return this.getCursos().size();
+    }
+
+    public List<Materia> getMateriasDictadas() {
+        return materiasDictadas;
+    }
+
+    public boolean tenesHabilidadParaTratar(Discapacidad discapacidad) {
+        return this.discapacidadesTratadas.contains(discapacidad);
     }
 }

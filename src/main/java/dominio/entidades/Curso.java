@@ -1,19 +1,24 @@
 package dominio.entidades;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Curso {
     private String titulo;
     private Materia materia;
-    private CicloElectivo cicloElectivo;
+    private CicloLectivo cicloLectivo;
     private Docente docente;
+    private List<Ayudante> ayudantes;
     private List<Alumno> alumnos;
     private Dia dia;
+    private LocalTime horaInicio;
+    private Turno turno;
 
-    public Curso()
-    {
-        this.alumnos = new ArrayList<>();
+    public Curso() {
+        this.alumnos    = new ArrayList<>();
+        this.ayudantes  = new ArrayList<>();
     }
 
     /**
@@ -28,6 +33,22 @@ public class Curso {
         this.titulo = titulo;
     }
 
+    public void setTurno(Turno turno) {
+        this.turno = turno;
+    }
+
+    public Turno getTurno() {
+        return turno;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
     public Materia getMateria() {
         return materia;
     }
@@ -36,12 +57,12 @@ public class Curso {
         this.materia = materia;
     }
 
-    public CicloElectivo getCicloElectivo() {
-        return cicloElectivo;
+    public CicloLectivo getCicloLectivo() {
+        return cicloLectivo;
     }
 
-    public void setCicloElectivo(CicloElectivo cicloElectivo) {
-        this.cicloElectivo = cicloElectivo;
+    public void setCicloLectivo(CicloLectivo cicloLectivo) {
+        this.cicloLectivo = cicloLectivo;
     }
 
     public Docente getDocente() {
@@ -76,13 +97,17 @@ public class Curso {
         this.getAlumnos().add(alumno);
     }
 
+    public void agregarAyudantes(Ayudante ... ayudantes) {
+        Collections.addAll(this.ayudantes, ayudantes);
+    }
+
     /**
      *  Functions! :D
      */
 
     public Boolean estasActivo()
     {
-        return this.getCicloElectivo().sosCicloActual();
+        return this.getCicloLectivo().sosCicloActual();
     }
     public Integer cantidadAlumnos() {return this.getAlumnos().size();}
     public Boolean tenesAlumno(Alumno alumno)

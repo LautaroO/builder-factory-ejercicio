@@ -1,5 +1,6 @@
 package dominio.entidades;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +8,16 @@ public class Alumno {
     private String nombre;
     private String apellido;
     private Integer legajo;
+    private LocalDate anioDeIngreso;
+    private LocalDate fechaDeNacimiento;
+    private Genero genero;
+    private List<Discapacidad> discapacidades;
     private Integer puntaje;
     private List<Curso> cursos;
 
     public Alumno() {
         this.cursos = new ArrayList<>();
+        this.discapacidades = new ArrayList<>();
     }
 
     /**

@@ -83,15 +83,15 @@ public class CursoBuilder {
         return this;
     }
 
-    public CursoBuilder agregarCicloElectivo(CicloElectivo ciclo) throws ExcepcionDeCreacionDeCurso
+    public CursoBuilder agregarCicloElectivo(CicloLectivo ciclo) throws ExcepcionDeCreacionDeCurso
     {
         Integer añoActual = LocalDate.now().getYear();
-        if(añoActual.intValue() != ciclo.getAño().intValue())
+        if(añoActual.intValue() != ciclo.getAnio().intValue())
         {
             throw new ExcepcionDeCreacionDeCurso("No es un ciclo electivo valido ");
         }
 
-        this.curso.setCicloElectivo(ciclo);
+        this.curso.setCicloLectivo(ciclo);
 
         return this;
     }
@@ -166,7 +166,7 @@ public class CursoBuilder {
             throw new ExcepcionDeCreacionDeCurso("No hay la minima cantidad de alumnos");
         }
 
-        if(this.esNull(this.curso::getCicloElectivo))
+        if(this.esNull(this.curso::getCicloLectivo))
         {
             throw new ExcepcionDeCreacionDeCurso("No se asignó el ciclo electivo");
         }

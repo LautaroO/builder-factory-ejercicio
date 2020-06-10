@@ -18,7 +18,7 @@ public class TesterPrincipal {
     private Repository<Docente> repoDocentes;
     private Materia diseño;
     private Materia algebra;
-    private CicloElectivo cicloActual;
+    private CicloLectivo cicloActual;
     private Alumno lalo;
     private Alumno julio;
     private Docente eze;
@@ -36,8 +36,8 @@ public class TesterPrincipal {
         algebra.setNombre("Algebra");
 
         /** CiclosElectivos */
-        this.cicloActual = new CicloElectivo();
-        cicloActual.setAño(LocalDate.now().getYear());
+        this.cicloActual = new CicloLectivo();
+        cicloActual.setAnio(LocalDate.now().getYear());
 
         /** Docentes */
         this.repoDocentes = new Repository<Docente>(new DAOMemo<Docente>(), Docente.class);
@@ -45,13 +45,13 @@ public class TesterPrincipal {
         this.eze = new Docente();
         eze.setNombre("Ezequiel");
         eze.setApellido("Escobar");
-        eze.agregarMaterias(this.diseño);
+        eze.agregarMateriasDeInteres(this.diseño);
         this.repoDocentes.insert(this.eze);
 
         this.juan = new Docente();
         juan.setNombre("Juan");
         juan.setApellido("Perez");
-        juan.agregarMaterias(this.algebra);
+        juan.agregarMateriasDeInteres(this.algebra);
         this.repoDocentes.insert(this.juan);
 
 
@@ -106,7 +106,7 @@ public class TesterPrincipal {
 
         Assert.assertEquals(nuevoCurso.getTitulo(), "Un Curso los miercoles a la noche De Diseño");
         Assert.assertEquals(nuevoCurso.getDia(), Dia.MIERCOLES);
-        Assert.assertEquals(nuevoCurso.getCicloElectivo(), this.cicloActual);
+        Assert.assertEquals(nuevoCurso.getCicloLectivo(), this.cicloActual);
         Assert.assertEquals(nuevoCurso.getMateria(), this.diseño);
         Assert.assertEquals(nuevoCurso.getDocente(), this.eze);
         Assert.assertTrue(nuevoCurso.tenesAlumno(this.lalo)
