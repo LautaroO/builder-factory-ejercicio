@@ -10,8 +10,8 @@ import java.util.List;
 
 public class PorMenorDisponibilidad extends AsignadorDeDocente {
 
-    public PorMenorDisponibilidad(Repository<Docente> repo) {
-        super(repo);
+    public PorMenorDisponibilidad(List<Docente> docentes) {
+        super(docentes);
     }
 
     @Override

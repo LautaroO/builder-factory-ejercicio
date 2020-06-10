@@ -40,7 +40,7 @@ public class TesterPrincipal {
         cicloActual.setAño(LocalDate.now().getYear());
 
         /** Docentes */
-        this.repoDocentes = new Repository<Docente>(new DAOMemo<Docente>());
+        this.repoDocentes = new Repository<Docente>(new DAOMemo<Docente>(), Docente.class);
 
         this.eze = new Docente();
         eze.setNombre("Ezequiel");
@@ -57,7 +57,7 @@ public class TesterPrincipal {
 
 
         /** Factory */
-        this.builderFactory = new CursoBuilderFactory(this.repoDocentes);
+        this.builderFactory = new CursoBuilderFactory(this.repoDocentes.findAll());
 
         /** Alumnos */
 

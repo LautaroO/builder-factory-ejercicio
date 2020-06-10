@@ -7,9 +7,11 @@ import java.util.List;
 
 public class Repository<T> {
     private IDAO<T> dao;
+    private Class<T> clase;
 
-    public Repository(IDAO<T> dao) {
+    public Repository(IDAO<T> dao, Class<T> clase) {
         this.dao = dao;
+        this.clase = clase;
     }
 
     public void setDao(IDAO<T> dao) {
@@ -20,12 +22,12 @@ public class Repository<T> {
         return this.dao.exist(id);
     }
 
-    public T find(int id, Class<T> clase){
-        return this.dao.find(id, clase);
+    public T find(int id){
+        return this.dao.find(id, this.clase);
     }
 
-    public List<T> findAll(Class<T> clase){
-        return this.dao.findAll(clase);
+    public List<T> findAll(){
+        return this.dao.findAll(this.clase);
     }
 
     public void delete(T object){

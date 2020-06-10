@@ -6,17 +6,19 @@ import dominio.entidades.Docente;
 import dominio.estrategias.asignacionDeAlumnos.PuntajeMayor;
 import dominio.estrategias.asignacionDeDocentes.PorMenorDisponibilidad;
 
+import java.util.List;
+
 public class CursoBuilderFactory {
 
     private Integer minimoDeAlumnos;
     private Integer maximoDeAlumnos;
-    private Repository<Docente> repositorioDocentes;
+    private List<Docente> docentes;
 
-    public CursoBuilderFactory(Repository<Docente> repoDocentes)
+    public CursoBuilderFactory(List<Docente> docentes)
     {
         this.minimoDeAlumnos = 2;
         this.maximoDeAlumnos = 10;
-        this.repositorioDocentes = repoDocentes;
+        this.docentes = docentes;
     }
 
     public CursoBuilder createBuilder()
@@ -26,7 +28,7 @@ public class CursoBuilderFactory {
         builder.setSelectorDeAlumnos(new PuntajeMayor());
         builder.setCantidadMinimaAlumnos(this.getMinimoDeAlumnos());
         builder.setCapacidadAlumnos(this.getMaximoDeAlumnos());
-        builder.setAsignadorDeDocente(new PorMenorDisponibilidad(this.getRepoDocentes()));
+        builder.setAsignadorDeDocente(new PorMenorDisponibilidad(this.getDocentes()));
 
         return builder;
     }
@@ -51,9 +53,7 @@ public class CursoBuilderFactory {
         return this.maximoDeAlumnos; // puede salir de un config
     }
 
-    private Repository<Docente> getRepoDocentes()
-    {
-        return this.repositorioDocentes;
+    private List<Docente> getDocentes() {
+        return docentes;
     }
-
 }

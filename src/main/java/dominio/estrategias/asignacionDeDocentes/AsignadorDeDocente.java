@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AsignadorDeDocente {
-    protected Repository<Docente> repoDocentes;
+    protected List<Docente> docentes;
 
-    public AsignadorDeDocente(Repository<Docente> repo)
+    public AsignadorDeDocente(List<Docente> docentes)
     {
-        this.repoDocentes = repo;
+        this.docentes = docentes;
     }
 
     public abstract void asignarDocente(Curso curso) throws ExcepcionDeAsignadorDeDocente;
@@ -39,7 +39,7 @@ public abstract class AsignadorDeDocente {
     protected List<Docente> docentesDisponibles(Curso unCurso) throws ExcepcionDeAsignadorDeDocente
     {
         List<Docente> docentes = new ArrayList<>();
-        docentes.addAll(this.repoDocentes.findAll(Docente.class));
+        docentes.addAll(this.docentes);
 
         if(docentes.size() <= 0)
         {
