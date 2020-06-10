@@ -13,6 +13,8 @@ public class CursoBuilderFactory {
     private Integer minimoDeAlumnos;
     private Integer maximoDeAlumnos;
     private List<Docente> docentes;
+    private String algoritmoSelectorDeAlumnos = "puntajeMayor";
+    private String algoritmoAsignadorDocente  = "menorDisponibilidad";
 
     public CursoBuilderFactory(List<Docente> docentes)
     {
@@ -25,13 +27,15 @@ public class CursoBuilderFactory {
     {
         CursoBuilder builder = new CursoBuilder();
 
-        builder.setSelectorDeAlumnos(new PuntajeMayor());
+        builder.setSelectorDeAlumnos(SelectorDeAlumnosFactory.obtenerSelector(this.algoritmoSelectorDeAlumnos));
         builder.setCantidadMinimaAlumnos(this.getMinimoDeAlumnos());
         builder.setCapacidadAlumnos(this.getMaximoDeAlumnos());
-        builder.setAsignadorDeDocente(new PorMenorDisponibilidad(this.getDocentes()));
+        builder.setAsignadorDeDocente(AsignadorDocenteFactory.obtenerAsignador(this.algoritmoAsignadorDocente, this.docentes));
 
         return builder;
     }
+
+
 
     public void setMinimoDeAlumnos(Integer minimo)
     {
@@ -41,6 +45,14 @@ public class CursoBuilderFactory {
     public void setMaximoDeAlumnos(Integer maximo)
     {
         this.maximoDeAlumnos = maximo;
+    }
+
+    public void setAlgoritmoAsignadorDocente(String algoritmoAsignadorDocente) {
+        this.algoritmoAsignadorDocente = algoritmoAsignadorDocente;
+    }
+
+    public void setAlgoritmoSelectorDeAlumnos(String algoritmoSelectorDeAlumnos) {
+        this.algoritmoSelectorDeAlumnos = algoritmoSelectorDeAlumnos;
     }
 
     private Integer getMinimoDeAlumnos()

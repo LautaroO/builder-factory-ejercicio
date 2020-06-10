@@ -5,6 +5,7 @@ import dominio.Repositorios.daos.DAOMemo;
 import dominio.builders.CursoBuilder;
 import dominio.builders.ExcepcionDeCreacionDeCurso;
 import dominio.entidades.*;
+import dominio.factorys.AsignadorDocenteFactory;
 import dominio.factorys.CursoBuilderFactory;
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,17 +82,14 @@ public class TesterPrincipal {
      *
     */
     @Test
-    public void creacionValidaDeUnCurso()
-    {
+    public void creacionValidaDeUnCurso() throws ExcepcionDeCreacionDeCurso {
         this.builderFactory.setMinimoDeAlumnos(2); //para fines del test
 
         CursoBuilder cursoBuilder = this.builderFactory.createBuilder();
 
-        Curso nuevoCurso = new Curso(); //para que no me diga que "puede no estar inicializado"
+        Curso nuevoCurso;//para que no me diga que "puede no estar inicializado"
 
-        try
-        {
-            nuevoCurso = cursoBuilder.agregarTitulo("Un Curso los miercoles a la noche De Diseño")
+        nuevoCurso = cursoBuilder.agregarTitulo("Un Curso los miercoles a la noche De Diseño")
                     .agregarDia(Dia.MIERCOLES)
                     .agregarCicloElectivo(this.cicloActual) //ciclo 2020
                     .agregarTurno(Turno.NOCHE)
@@ -99,13 +97,7 @@ public class TesterPrincipal {
                     .agregarMateria(this.diseño) //diseño
                     .agregarDocente() //vamos a agregar uno mediante el algoritmo automatico
                     .agregarAlumnos(this.lalo, this.julio)
-                    .build()
-                    ;
-        }
-        catch(ExcepcionDeCreacionDeCurso ex)
-        {
-            Assert.fail(ex.getMessage());
-        }
+                    .build();
 
         Assert.assertEquals(nuevoCurso.getTitulo(), "Un Curso los miercoles a la noche De Diseño");
         Assert.assertEquals(nuevoCurso.getDia(), Dia.MIERCOLES);
