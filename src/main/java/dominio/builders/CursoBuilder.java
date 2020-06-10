@@ -202,7 +202,7 @@ public class CursoBuilder {
 
     private Boolean tieneMinimoDeAlumnos()
     {
-        return this.curso.cantidadAlumnos() >= this.capacidadAlumnos;
+        return this.curso.cantidadAlumnos() >= this.getCantidadMinimaAlumnos();
     }
 
 }

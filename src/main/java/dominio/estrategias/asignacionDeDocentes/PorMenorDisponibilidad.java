@@ -1,17 +1,16 @@
 package dominio.estrategias.asignacionDeDocentes;
 
-import dominio.Repositorios.RepositorioDeDocentes;
+import dominio.Repositorios.Repository;
 import dominio.entidades.Curso;
 import dominio.entidades.Docente;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PorMenorDisponibilidad extends AsignadorDeDocente {
 
-    public PorMenorDisponibilidad(RepositorioDeDocentes repo) {
+    public PorMenorDisponibilidad(Repository<Docente> repo) {
         super(repo);
     }
 

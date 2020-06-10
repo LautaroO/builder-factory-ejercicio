@@ -1,23 +1,21 @@
 package principal;
 
-import dominio.Repositorios.RepositorioDeDocentes;
+import dominio.Repositorios.Repository;
+import dominio.Repositorios.daos.DAOMemo;
 import dominio.builders.CursoBuilder;
 import dominio.builders.ExcepcionDeCreacionDeCurso;
 import dominio.entidades.*;
 import dominio.factorys.CursoBuilderFactory;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TesterPrincipal {
 
     private CursoBuilderFactory builderFactory;
-    private RepositorioDeDocentes repoDocentes;
+    private Repository<Docente> repoDocentes;
     private Materia diseño;
     private Materia algebra;
     private CicloElectivo cicloActual;
@@ -42,21 +40,21 @@ public class TesterPrincipal {
         cicloActual.setAño(LocalDate.now().getYear());
 
         /** Docentes */
-        this.repoDocentes = new RepositorioDeDocentes();
+        this.repoDocentes = new Repository<Docente>(new DAOMemo<Docente>());
 
         this.eze = new Docente();
         eze.setNombre("Ezequiel");
         eze.setApellido("Escobar");
         eze.agregarMaterias(this.diseño);
+        this.repoDocentes.insert(this.eze);
 
         this.juan = new Docente();
         juan.setNombre("Juan");
         juan.setApellido("Perez");
         juan.agregarMaterias(this.algebra);
+        this.repoDocentes.insert(this.juan);
 
-        this.repoDocentes.agregarDocentes(
-                this.eze, this.juan
-        );
+
 
         /** Factory */
         this.builderFactory = new CursoBuilderFactory(this.repoDocentes);
@@ -84,11 +82,11 @@ public class TesterPrincipal {
     @Test
     public void creacionValidaDeUnCurso()
     {
+        this.builderFactory.setMinimoDeAlumnos(2); //para fines del test
+
         CursoBuilder cursoBuilder = this.builderFactory.createBuilder();
 
         Curso nuevoCurso = new Curso(); //para que no me diga que "puede no estar inicializado"
-
-        Docente eze = this.repoDocentes.getDocentes().get(0);
 
         try
         {

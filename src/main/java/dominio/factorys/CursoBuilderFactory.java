@@ -1,7 +1,8 @@
 package dominio.factorys;
 
-import dominio.Repositorios.RepositorioDeDocentes;
+import dominio.Repositorios.Repository;
 import dominio.builders.CursoBuilder;
+import dominio.entidades.Docente;
 import dominio.estrategias.asignacionDeAlumnos.PuntajeMayor;
 import dominio.estrategias.asignacionDeDocentes.PorMenorDisponibilidad;
 
@@ -9,9 +10,9 @@ public class CursoBuilderFactory {
 
     private Integer minimoDeAlumnos;
     private Integer maximoDeAlumnos;
-    private RepositorioDeDocentes repositorioDocentes;
+    private Repository<Docente> repositorioDocentes;
 
-    public CursoBuilderFactory(RepositorioDeDocentes repoDocentes)
+    public CursoBuilderFactory(Repository<Docente> repoDocentes)
     {
         this.minimoDeAlumnos = 2;
         this.maximoDeAlumnos = 10;
@@ -20,7 +21,6 @@ public class CursoBuilderFactory {
 
     public CursoBuilder createBuilder()
     {
-
         CursoBuilder builder = new CursoBuilder();
 
         builder.setSelectorDeAlumnos(new PuntajeMayor());
@@ -51,7 +51,7 @@ public class CursoBuilderFactory {
         return this.maximoDeAlumnos; // puede salir de un config
     }
 
-    private RepositorioDeDocentes getRepoDocentes()
+    private Repository<Docente> getRepoDocentes()
     {
         return this.repositorioDocentes;
     }

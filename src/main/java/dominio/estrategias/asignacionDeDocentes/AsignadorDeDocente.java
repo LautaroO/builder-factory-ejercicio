@@ -1,17 +1,16 @@
 package dominio.estrategias.asignacionDeDocentes;
 
-import dominio.Repositorios.RepositorioDeDocentes;
+import dominio.Repositorios.Repository;
 import dominio.entidades.Curso;
 import dominio.entidades.Docente;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AsignadorDeDocente {
-    protected RepositorioDeDocentes repoDocentes;
+    protected Repository<Docente> repoDocentes;
 
-    public AsignadorDeDocente(RepositorioDeDocentes repo)
+    public AsignadorDeDocente(Repository<Docente> repo)
     {
         this.repoDocentes = repo;
     }
@@ -40,7 +39,7 @@ public abstract class AsignadorDeDocente {
     protected List<Docente> docentesDisponibles(Curso unCurso) throws ExcepcionDeAsignadorDeDocente
     {
         List<Docente> docentes = new ArrayList<>();
-        docentes.addAll(this.repoDocentes.getDocentes());
+        docentes.addAll(this.repoDocentes.findAll(Docente.class));
 
         if(docentes.size() <= 0)
         {
