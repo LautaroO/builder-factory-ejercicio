@@ -101,6 +101,10 @@ public class Curso {
         Collections.addAll(this.ayudantes, ayudantes);
     }
 
+    public List<Ayudante> getAyudantes() {
+        return this.ayudantes;
+    }
+
     /**
      *  Functions! :D
      */
@@ -114,4 +118,6 @@ public class Curso {
     {
         return this.getAlumnos().contains(alumno);
     }
+
+
 }

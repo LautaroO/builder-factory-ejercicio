@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class TesterPrincipal {
 
@@ -93,6 +94,8 @@ public class TesterPrincipal {
             nuevoCurso = cursoBuilder.agregarTitulo("Un Curso los miercoles a la noche De Diseño")
                     .agregarDia(Dia.MIERCOLES)
                     .agregarCicloElectivo(this.cicloActual) //ciclo 2020
+                    .agregarTurno(Turno.NOCHE)
+                    .agregarHoraDeInicio(LocalTime.parse("19:30:00"))
                     .agregarMateria(this.diseño) //diseño
                     .agregarDocente() //vamos a agregar uno mediante el algoritmo automatico
                     .agregarAlumnos(this.lalo, this.julio)
@@ -119,6 +122,14 @@ public class TesterPrincipal {
         CursoBuilder builder = this.builderFactory.createBuilder();
 
         builder.build();
+    }
+
+    @Test(expected = ExcepcionDeCreacionDeCurso.class)
+    public void asignarDocenteSinTurnoNiDia() throws ExcepcionDeCreacionDeCurso
+    {
+        CursoBuilder builder = this.builderFactory.createBuilder();
+
+        builder.agregarMateria(this.diseño).agregarDocente(this.eze);
     }
 
     @Test(expected = ExcepcionDeCreacionDeCurso.class)

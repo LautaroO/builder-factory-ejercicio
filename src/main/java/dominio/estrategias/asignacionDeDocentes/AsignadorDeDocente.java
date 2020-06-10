@@ -33,7 +33,7 @@ public abstract class AsignadorDeDocente {
      */
     protected Boolean puedeDarCurso(Curso unCurso, Docente unDocente)
     {
-        return unDocente.estasDisponible(unCurso.getDia()) &&
+        return unDocente.estasDisponible(unCurso.getDia(), unCurso.getTurno()) &&
                 unDocente.dictasMateria(unCurso.getMateria());
     };
     protected List<Docente> docentesDisponibles(Curso unCurso) throws ExcepcionDeAsignadorDeDocente

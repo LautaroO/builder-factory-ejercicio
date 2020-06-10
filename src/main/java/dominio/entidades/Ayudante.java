@@ -28,4 +28,5 @@ public class Ayudante {
     public void setEsAlumno(boolean esAlumno) {
         this.esAlumno = esAlumno;
     }
+
 }

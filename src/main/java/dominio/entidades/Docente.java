@@ -73,9 +73,16 @@ public class Docente {
     /**
      *  Functions! :D
      */
-    public Boolean estasDisponible(Dia unDia)
+    public Boolean estasDisponible(Dia unDia, Turno unTurno)
     {
-        return this.getCursos().stream().allMatch(curso -> curso.getDia() != unDia);
+        if((unDia == null) || (unTurno == null))
+        {
+            return false;
+        }
+
+        return this.getCursos().stream().noneMatch(curso ->
+                (curso.getDia() == unDia) && (curso.getTurno() == unTurno)
+        );
     }
 
     public Boolean dictasMateria(Materia materia)
@@ -94,4 +101,5 @@ public class Docente {
     public boolean tenesHabilidadParaTratar(Discapacidad discapacidad) {
         return this.discapacidadesTratadas.contains(discapacidad);
     }
+
 }

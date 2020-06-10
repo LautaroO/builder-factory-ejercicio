@@ -6,6 +6,7 @@ import dominio.estrategias.asignacionDeDocentes.ExcepcionDeAsignadorDeDocente;
 import dominio.estrategias.asignacionDeDocentes.AsignadorDeDocente;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
@@ -32,10 +33,6 @@ public class CursoBuilder {
 
     public void setCapacidadAlumnos(Integer capacidadAlumnos) {
         this.capacidadAlumnos = capacidadAlumnos;
-    }
-
-    public Curso getCurso() {
-        return curso;
     }
 
     public void setCurso(Curso curso) {
@@ -97,6 +94,7 @@ public class CursoBuilder {
     }
 
     public CursoBuilder agregarDocente() throws ExcepcionDeCreacionDeCurso{
+
         try {
             this.getAsignadorDeDocente().asignarDocente(this.curso);
         }
@@ -110,8 +108,9 @@ public class CursoBuilder {
 
     public CursoBuilder agregarDocente(Docente docente) throws ExcepcionDeCreacionDeCurso
     {
+
         try {
-            this.getAsignadorDeDocente().asignarDocente(this.getCurso(), docente);
+            this.getAsignadorDeDocente().asignarDocente(this.curso, docente);
         }
         catch(ExcepcionDeAsignadorDeDocente ex)
         {
@@ -127,17 +126,35 @@ public class CursoBuilder {
         return this;
     }
 
+    public CursoBuilder agregarTurno(Turno turno)
+    {
+        this.curso.setTurno(turno);
+        return this;
+    }
+
+    public CursoBuilder agregarHoraDeInicio(LocalTime hora)
+    {
+        this.curso.setHoraInicio(hora);
+        return this;
+    }
+
+    public CursoBuilder agregarAyudantes(Ayudante ayudantes)
+    {
+        this.curso.agregarAyudantes(ayudantes);
+        return this;
+    }
+
     public CursoBuilder agregarAlumnos(Alumno ... _alumnos) throws ExcepcionDeCreacionDeCurso
     {
         List<Alumno> alumnos = Arrays.asList(_alumnos);
 
-        Boolean algunoYaEstaInscripto = alumnos.stream().anyMatch(alumno -> alumno.tenesCurso(this.getCurso()));
+        Boolean algunoYaEstaInscripto = alumnos.stream().anyMatch(alumno -> alumno.tenesCurso(this.curso));
         if(algunoYaEstaInscripto)
         {
             throw new ExcepcionDeCreacionDeCurso("Un/Unos Alumnos ya estan inscriptos a este curso!");
         }
 
-        Integer cuposDisponibles = this.getCapacidadAlumnos() - this.getCurso().cantidadAlumnos();
+        Integer cuposDisponibles = this.getCapacidadAlumnos() - this.curso.cantidadAlumnos();
 
         /**checkeo por las dudas, no es necesario si usamos el builder!*/
         cuposDisponibles = cuposDisponibles < 0 ? 0 : cuposDisponibles;
@@ -150,7 +167,7 @@ public class CursoBuilder {
         List<Alumno> alumnosSeleccionados =
                 this.selectorDeAlumnos.seleccionar(alumnos, cuposDisponibles);
 
-        this.getCurso().agregarAlumnos(alumnosSeleccionados);
+        this.curso.agregarAlumnos(alumnosSeleccionados);
 
         return this;
     }
@@ -186,10 +203,17 @@ public class CursoBuilder {
             throw new ExcepcionDeCreacionDeCurso("No se asignó el dia del curso");
         }
 
-        /** Si salio t odo bien, le agendamos el curso*/
-        this.getCurso().getDocente().agregarCursos(this.getCurso());
+        if(this.esNull(this.curso::getTurno))
+        {
+            throw new ExcepcionDeCreacionDeCurso("No se especifico el turno");
+        }
 
-        return this.getCurso();
+        if(this.esNull(this.curso::getHoraInicio))
+        {
+            throw new ExcepcionDeCreacionDeCurso("No se especifico el horario de inicio");
+        }
+
+        return this.curso;
     }
     /**
      *  private Functions! c:
